@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Serumpun Kopi</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('coffee.jpg'); /* Ganti dengan URL gambar latar belakang yang sesuai */
+            background-size: cover;
+            background-position: center;
+            margin: 0;
+            padding: 0;
+            color: rgb(16, 0, 0); /* Teks berwarna putih agar lebih kontras dengan latar belakang */
+        }
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.8); /* Membuat latar belakang kontainer sedikit transparan */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .kopi-list {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
+        }
+        .kopi-item {
+            text-align: center;
+            padding: 10px;
+            border: 1px solid #ddd;
+            width: 150px;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+        }
+        .kopi-item img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+        }
+        .kopi-item select {
+            padding: 5px;
+            margin-top: 10px;
+        }
+        .total {
+            margin-top: 20px;
+            font-size: 20px;
+            text-align: center;
+        }
+        .submit-btn {
+            background-color: #4CAF50;
+            color: rgb(31, 1, 1);
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        .submit-btn:hover {
+            background-color: #45a049;
+        }
+        .bukti-pembayaran {
+            margin-top: 20px;
+            background-color: #fff;
+            padding: 15px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+        .bukti-pembayaran h3 {
+            text-align: center;
+        }
+        .bukti-pembayaran ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        .bukti-pembayaran ul li {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Serumpun Kopi</h1>
+
+    <!-- Input Nama Pembeli -->
+    <div class="total">
+        <label for="nama-pembeli">Nama Pembeli:</label>
+        <input type="text" id="nama-pembeli" placeholder="Masukkan nama Anda">
+    </div>
+
+    <div class="kopi-list">
+        <div class="kopi-item">
+            <img src="arabica.jpg" alt="Kopi Arabica">
+            <h3>Kopi Arabica</h3>
+            <p>Rp 30.000 / 100g</p>
+            <select id="kopi-arabica">
+                <option value="0">Pilih Jumlah (gram)</option>
+                <option value="100">100g</option>
+                <option value="200">200g</option>
+                <option value="300">300g</option>
+            </select>
+        </div>
+
+        <div class="kopi-item">
+            <img src="robusta.jpg" alt="Kopi Robusta">
+            <h3>Kopi Robusta</h3>
+            <p>Rp 25.000 / 100g</p>
+            <select id="kopi-robusta">
+                <option value="0">Pilih Jumlah (gram)</option>
+                <option value="100">100g</option>
+                <option value="200">200g</option>
+                <option value="300">300g</option>
+            </select>
+        </div>
+
+        <div class="kopi-item">
+            <img src="kopi luwak.jpg" alt="Kopi Luwak">
+            <h3>Kopi Luwak</h3>
+            <p>Rp 50.000 / 100g</p>
+            <select id="kopi-luwak">
+                <option value="0">Pilih Jumlah (gram)</option>
+                <option value="100">100g</option>
+                <option value="200">200g</option>
+                <option value="300">300g</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="total">
+        <p>Total Pembelian: Rp <span id="total">0</span></p>
+        <button class="submit-btn" onclick="hitungTotal()">Bayar</button>
+    </div>
+
+    <!-- Bukti Pembayaran -->
+    <div class="bukti-pembayaran" id="bukti-pembayaran" style="display: none;">
+        <h3>Bukti Pembayaran</h3>
+        <p>Nama Pembeli: <span id="nama-pembeli-output"></span></p>
+        <ul id="daftar-pembelian"></ul>
+        <p>Total Harga: Rp <span id="total-harga">0</span></p>
+    </div>
+</div>
+
+<script>
+    function hitungTotal() {
+        const hargaArabica = 30000;
+        const hargaRobusta = 25000;
+        const hargaLuwak = 50000;
+
+        const jumlahArabica = parseInt(document.getElementById('kopi-arabica').value);
+        const jumlahRobusta = parseInt(document.getElementById('kopi-robusta').value);
+        const jumlahLuwak = parseInt(document.getElementById('kopi-luwak').value);
+
+        let totalHarga = 0;
+        const pembelian = [];
+
+        if (jumlahArabica > 0) {
+            totalHarga += (jumlahArabica * hargaArabica / 100);
+            pembelian.push(`Kopi Arabica: Rp ${hargaArabica / 100 * jumlahArabica}`);
+        }
+        if (jumlahRobusta > 0) {
+            totalHarga += (jumlahRobusta * hargaRobusta / 100);
+            pembelian.push(`Kopi Robusta: Rp ${hargaRobusta / 100 * jumlahRobusta}`);
+        }
+        if (jumlahLuwak > 0) {
+            totalHarga += (jumlahLuwak * hargaLuwak / 100);
+            pembelian.push(`Kopi Luwak: Rp ${hargaLuwak / 100 * jumlahLuwak}`);
+        }
+
+        // Menampilkan nama pembeli
+        const namaPembeli = document.getElementById('nama-pembeli').value;
+        document.getElementById('nama-pembeli-output').innerText = namaPembeli || "Nama tidak tersedia";
+
+        document.getElementById('total').innerText = totalHarga.toFixed(0);
+
+        // Menampilkan bukti pembayaran
+        const buktiPembayaran = document.getElementById('bukti-pembayaran');
+        const daftarPembelian = document.getElementById('daftar-pembelian');
+        daftarPembelian.innerHTML = ''; // Menghapus isi lama
+
+        pembelian.forEach(item => {
+            const li = document.createElement('li');
+            li.textContent = item;
+            daftarPembelian.appendChild(li);
+        });
+
+        document.getElementById('total-harga').innerText = totalHarga.toFixed(0);
+
+        // Menampilkan bukti pembayaran
+        buktiPembayaran.style.display = 'block';
+    }
+</script>
+
+</body>
+</html>
